@@ -59,8 +59,8 @@ pnpm dev
 ```
 
 This will start:
-- **Frontend**: http://localhost:3000 (Vite dev server)
-- **Backend**: http://localhost:3001 (Hono API server)
+- **Frontend**: http://localhost:3001 (Vite dev server)
+- **Backend**: http://localhost:8000 (Hono API server)
 - **Database**: localhost:5432 (PostgreSQL)
 
 ### 4. Setup Database Schema
@@ -196,8 +196,8 @@ PORT=3001
    ```
 
 4. **Open Browser**
-   - Frontend: http://localhost:3000
-   - Backend API: http://localhost:3001
+   - Frontend: http://localhost:3001
+   - Backend API: http://localhost:8000
 
 ## 🔧 Troubleshooting
 
@@ -213,9 +213,9 @@ docker-compose up -d
 
 ### Port Conflicts
 ```bash
-# Check what's using ports 3000/3001
-lsof -i :3000
+# Check what's using ports 3001/8000
 lsof -i :3001
+lsof -i :8000
 
 # Kill processes if needed
 killall node
@@ -233,16 +233,16 @@ pnpm install
 
 ### Health Check
 ```bash
-curl http://localhost:3001/health
+curl http://localhost:8000/health
 ```
 
 ### Users API
 ```bash
 # Get all users
-curl http://localhost:3001/api/users
+curl http://localhost:8000/api/users
 
 # Create user
-curl -X POST http://localhost:3001/api/users \
+curl -X POST http://localhost:8000/api/users \
   -H "Content-Type: application/json" \
   -d '{"email":"test@example.com","name":"Test User"}'
 ```

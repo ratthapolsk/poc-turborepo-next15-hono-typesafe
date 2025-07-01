@@ -50,12 +50,12 @@ function displaySecrets(secrets: SecretConfig): void {
   console.log('')
 
   console.log('# API Configuration')
-  console.log('PORT=3001')
-  console.log('CORS_ORIGIN=http://localhost:3000')
+  console.log('PORT=8000')
+  console.log('CORS_ORIGIN=http://localhost:3001')
   console.log('')
 
   console.log('# Frontend Configuration')
-  console.log('NEXT_PUBLIC_API_BASE_URL=http://localhost:3001')
+  console.log('NEXT_PUBLIC_API_BASE_URL=http://localhost:8000')
   console.log('')
 
   console.log('# Security Keys')
