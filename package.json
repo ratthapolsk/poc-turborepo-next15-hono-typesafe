@@ -16,10 +16,17 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "secrets": "node scripts/generate-secrets.mjs",
-    "db:generate": "cd apps/services && pnpm db:generate",
-    "db:push": "cd apps/services && pnpm db:push",
-    "db:migrate": "cd apps/services && pnpm db:migrate:run",
-    "db:studio": "cd apps/services && pnpm db:studio"
+    "db:generate": "cd apps/database && pnpm db:generate",
+    "db:push": "cd apps/database && pnpm db:push",
+    "db:migrate": "cd apps/database && pnpm db:migrate:run",
+    "db:studio": "cd apps/database && pnpm db:studio",
+    "db:seed": "cd apps/database && pnpm db:seed",
+    "db:reset": "cd apps/database && pnpm db:reset",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:logs": "docker-compose logs -f",
+    "services:start": "pnpm docker:up && pnpm dev",
+    "services:stop": "pnpm docker:down"
   },
   "devDependencies": {
     "@types/node": "^20.5.0",

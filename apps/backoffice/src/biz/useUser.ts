@@ -1,7 +1,7 @@
 'use client'
 
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { fetcher } from '@/services/fetcher'
+import { fetcher } from '@/src/services/fetcher'
 import { z } from 'zod'
 
 export const UserSchema = z.object({

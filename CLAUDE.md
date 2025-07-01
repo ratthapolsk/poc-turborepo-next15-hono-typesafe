@@ -15,21 +15,23 @@ project-root/
 │
 ├── apps/
 │   └── backoffice/
-│       ├── app/                     # Next.js App Router
-│       │   ├── page.tsx
-│       │   └── layout.tsx
-│       ├── components/              # UI Components
-│       │   └── layout.tsx
-│       ├── providers/               # Global Providers
-│       │   └── global-provider.tsx
-│       ├── consts/                  # Constants
-│       ├── libs/                    # Utility libraries
-│       ├── biz/                     # 💼 Business Logic (Client-side)
-│       │   └── useUser.ts
-│       ├── services/                # 🌐 API Fetcher / Middleware Layer
-│       │   ├── fetcher.ts           # Used with React Query
-│       │   └── client.ts            # Fetch wrapper with baseURL and headers
+│       ├── src/
+│       ├──── app/                     # Next.js App Router
+│       │    ├─── page.tsx
+│       │    └─── layout.tsx
+│       ├──── components/              # UI Components
+│       │    └─── layout.tsx
+│       ├─── providers/               # Global Providers
+│       │    └── global-provider.tsx
+│       ├─── consts/                  # Constants
+│       ├─── libs/                    # Utility libraries
+│       ├─── biz/                     # 💼 Business Logic (Client-side)
+│       │    └── useUser.ts
+│       ├─── services/                # 🌐 API Fetcher / Middleware Layer
+│       │    ├── fetcher.ts           # Used with React Query
+│       │    └── client.ts            # Fetch wrapper with baseURL and headers
 │   └── services/                    # Backend Hono
+│   └── database/                    # Service DB migration
 ├── shared/
 │   ├── utils/                       # Shared utilities
 │   ├── components/                  # Shared UI Components

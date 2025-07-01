@@ -17,7 +17,8 @@ Full-stack approval system built with modern technologies in a Turborepo monorep
 approval/
 ├── apps/
 │   ├── backoffice/          # Frontend (Vite + React)
-│   └── services/            # Backend API (Hono)
+│   ├── services/            # Backend API (Hono)
+│   └── database/            # Database schemas & migrations
 ├── shared/
 │   ├── utils/               # Shared utilities
 │   └── components/          # Shared UI components
@@ -62,6 +63,20 @@ This will start:
 - **Backend**: http://localhost:3001 (Hono API server)
 - **Database**: localhost:5432 (PostgreSQL)
 
+### 4. Setup Database Schema
+
+```bash
+# Push schema to database (first time)
+pnpm db:push
+
+# Or generate and run migrations
+pnpm db:generate
+pnpm db:migrate
+
+# Seed with sample data
+pnpm db:seed
+```
+
 ## 🛠️ Development Commands
 
 ### Root Level (Recommended)
@@ -74,8 +89,17 @@ pnpm test         # Run all tests
 pnpm lint         # Lint all apps
 pnpm clean        # Clean all build outputs
 
-# Type checking
-pnpm type-check   # Check TypeScript in all apps
+# Database Operations
+pnpm db:push      # Push schema to database
+pnpm db:generate  # Generate migrations
+pnpm db:migrate   # Run migrations
+pnpm db:studio    # Open Drizzle Studio
+pnpm db:seed      # Seed database with sample data
+pnpm db:reset     # Reset database (truncate all tables)
+
+# Utilities
+pnpm secrets      # Generate secure environment secrets
+pnpm format       # Format code with Prettier
 ```
 
 ### Individual Apps
@@ -93,6 +117,14 @@ cd apps/services
 pnpm dev          # Hono dev server with hot reload
 pnpm build        # TypeScript compilation
 pnpm start        # Production server
+
+# Database only
+cd apps/database
+pnpm db:generate  # Generate migrations from schema
+pnpm db:push      # Push schema directly
+pnpm db:seed      # Seed database
+pnpm db:reset     # Reset database
+pnpm db:studio    # Open Drizzle Studio
 ```
 
 ## 🗄️ Database

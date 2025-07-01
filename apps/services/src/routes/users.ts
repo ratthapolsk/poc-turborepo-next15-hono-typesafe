@@ -1,7 +1,7 @@
 import { Hono } from 'hono'
 import { zValidator } from '@hono/zod-validator'
 import { db } from '@/db/connection'
-import { users } from '@/db/schema'
+import { users } from '@approval/database'
 import { CreateUserSchema, UpdateUserSchema } from '@/types'
 import { eq } from 'drizzle-orm'
 

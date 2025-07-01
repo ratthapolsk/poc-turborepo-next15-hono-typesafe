@@ -130,7 +130,82 @@ Need to fix init.sql script or remove CREATE DATABASE line
 1. ✅ Fix Docker init.sql database creation conflict
 2. ⚠️ Complete first schema push (waiting for truncate decision)
 3. Verify tables created successfully  
-4. Update README with migration workflow
+4. ✅ Update README with migration workflow
+
+---
+
+## 🏗️ DATABASE ARCHITECTURE REFACTOR (2025-07-01 19:00)
+### Status: COMPLETED ✅
+- ✅ **Created dedicated `apps/database` domain**
+- ✅ **Moved all DB logic from services to database app**
+- ✅ **Updated workspace dependencies and imports**
+- ✅ **Enhanced database commands and scripts**
+- ✅ **Updated documentation and .gitignore**
+
+### New Database App Structure:
+```
+apps/database/
+├── src/
+│   ├── db/
+│   │   ├── schema.ts          # Schema definitions
+│   │   └── migrations/        # Auto-generated migrations
+│   ├── scripts/
+│   │   ├── migrate.ts         # Run migrations
+│   │   ├── seed.ts            # Seed database
+│   │   └── reset.ts           # Reset database
+│   ├── utils/
+│   │   └── env.ts             # Environment validation
+│   └── index.ts               # Exports for other apps
+├── drizzle.config.ts          # Drizzle configuration
+└── package.json               # Database-specific commands
+```
+
+### Updated Commands:
+```bash
+pnpm db:push      # Push schema to database
+pnpm db:generate  # Generate migrations
+pnpm db:migrate   # Run migrations
+pnpm db:studio    # Open Drizzle Studio
+pnpm db:seed      # Seed database with sample data
+pnpm db:reset     # Reset database (truncate all tables)
+```
+
+### Benefits:
+- 🔧 **Separation of concerns** - Database logic isolated
+- 🧹 **Cleaner services** - No DB migration clutter
+- 🔄 **Reusable schemas** - Shared across apps via workspace
+- 🛠️ **Better maintenance** - Dedicated DB tools and scripts
+- 📚 **Clear documentation** - Updated README with workflow
+
+---
+
+## 🚨 MIGRATION ISSUES RESOLVED (2025-07-01 19:30)
+### Issues Found & Fixed:
+- ❌ **Missing drizzle-kit dependency** in database package
+- ❌ **Wrong environment path** (missing one level: `../../../../.env.local`)
+- ❌ **Missing schema.ts file** after refactor
+- ❌ **Module resolution errors** in services importing schema
+
+### Fixes Applied:
+- ✅ **Added drizzle-kit** to database devDependencies  
+- ✅ **Fixed environment path** in db-env.ts
+- ✅ **Recreated schema.ts** in correct location
+- ✅ **Updated import paths** in services to use `@approval/database`
+
+### Current Status:
+```
+✅ Database connection: WORKING
+✅ Environment loading: SUCCESS  
+✅ Schema detection: WORKING
+⚠️  Migration pending: Waiting for user decision on table truncation
+```
+
+### Ready Commands:
+```bash
+pnpm --filter @approval/database db:push    # Push schema
+pnpm --filter @approval/database db:seed    # Seed data
+pnpm --filter @approval/database db:studio  # Open studio
+```
 
 ### Database Migration .gitignore Rules Added:
 ```gitignore
@@ -156,3 +231,45 @@ src/db/migrations/meta/
 - ❌ **Meta directory** (meta/) → IGNORE  
 - ✅ **Docker init.sql** → COMMIT (manual seed data)
 - ❌ **Environment files** → IGNORE (security)
+
+---
+
+## 🎯 CRITICAL BUG RESOLUTION (2025-07-01 20:00)
+### Status: RESOLVED ✅
+- ❌ **PostgreSQL "serial type does not exist" error**
+- ✅ **Root cause:** Foreign key field using `serial()` instead of `integer()`
+- ✅ **Fix applied:** Changed `requesterId: serial('requester_id')` to `integer('requester_id')`
+- ✅ **Schema regenerated successfully**
+- ⚠️ **Migration pending:** User approval needed for table truncation
+
+### Technical Details:
+**Problem:** Line 16 in `apps/database/src/db/schema.ts`
+```typescript
+// ❌ INCORRECT - Foreign keys should not use serial()
+requesterId: serial('requester_id').references(() => users.id)
+
+// ✅ CORRECT - Use integer() for foreign key references  
+requesterId: integer('requester_id').references(() => users.id)
+```
+
+### Docker Services Commands Added:
+```bash
+pnpm docker:up        # Start PostgreSQL container
+pnpm docker:down      # Stop all containers  
+pnpm docker:logs      # View container logs
+pnpm services:start   # Start database + all apps
+pnpm services:stop    # Stop all services
+```
+
+### Migration Status:
+- ✅ Schema fixed and regenerated (migration 0001_greedy_gorilla_man.sql)
+- ⚠️ Migration prompt: "Truncate users table?" - awaiting user decision
+- ✅ Database connection working
+- ✅ Environment validation passing
+
+### Ready Commands:
+```bash
+pnpm services:start   # Start all services (DB + apps)
+pnpm db:push          # Complete migration (will prompt for truncation)
+pnpm db:studio        # Open database admin UI
+```
