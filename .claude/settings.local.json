@@ -4,13 +4,16 @@
       "Bash(mkdir:*)",
       "Bash(pnpm install:*)",
       "Bash(pnpm build:*)",
-      "Bash(rm:*)",
       "Bash(pnpm add:*)",
       "Bash(docker-compose up:*)",
-      "Bash(docker-compose:*)",
-      "Bash(mv:*)",
-      "Bash(chmod:*)"
+      "Bash(docker-compose:*)"
     ],
-    "deny": []
+    "deny": [
+        "**/.env*",
+        "**/*.pem",
+        "**/*.key",
+        "**/secrets/**",
+        "**/credentials/**"
+    ]
   }
 }
