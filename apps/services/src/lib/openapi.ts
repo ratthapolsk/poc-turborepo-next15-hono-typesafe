@@ -24,6 +24,10 @@ export function createOpenAPIApp() {
         description: 'User management endpoints',
       },
       {
+        name: 'approval-requests',
+        description: 'Approval request management endpoints',
+      },
+      {
         name: 'health',
         description: 'Health check endpoints',
       },

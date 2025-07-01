@@ -273,3 +273,99 @@ pnpm services:start   # Start all services (DB + apps)
 pnpm db:push          # Complete migration (will prompt for truncation)
 pnpm db:studio        # Open database admin UI
 ```
+
+---
+
+## 📚 SWAGGER/OPENAPI IMPLEMENTATION (2025-07-01 21:00)
+### Status: COMPLETED ✅
+- ✅ **Full OpenAPI 3.0 integration with Hono**
+- ✅ **Auto-generated Swagger UI documentation**
+- ✅ **Type-safe API routes with Zod validation**
+- ✅ **Request/Response schema validation**
+- ✅ **Clean code architecture**
+
+### Technical Implementation:
+**New Dependencies:**
+```json
+"@hono/swagger-ui": "^0.5.2",
+"@hono/zod-openapi": "^0.19.9",
+"zod": "^3.25.67"
+```
+
+**Architecture Overview:**
+```
+apps/services/src/
+├── index.ts                 # Main OpenAPI server
+├── lib/openapi.ts          # OpenAPI app configuration  
+├── schemas/
+│   ├── user.ts             # User API schemas + routes
+│   └── health.ts           # Health check schemas + routes
+└── routes/
+    ├── users-openapi.ts    # OpenAPI user endpoints
+    └── health-openapi.ts   # OpenAPI health endpoints
+```
+
+### API Endpoints:
+**📚 Documentation:**
+- `GET /docs` - Interactive Swagger UI
+- `GET /openapi.json` - OpenAPI 3.0 specification
+
+**🏥 Health & Info:**
+- `GET /` - Application information
+- `GET /health` - Health check endpoint
+
+**👤 User Management (Full CRUD):**
+- `GET /api/users` - List all users
+- `GET /api/users/{id}` - Get user by ID
+- `POST /api/users` - Create new user
+- `PUT /api/users/{id}` - Update existing user
+- `DELETE /api/users/{id}` - Delete user
+
+### Key Features:
+- ✅ **Type-Safe Schemas** - Zod integration for compile-time validation
+- ✅ **Auto Documentation** - Routes automatically appear in Swagger UI
+- ✅ **Request Validation** - Invalid requests rejected with proper errors
+- ✅ **Response Typing** - All responses properly typed and documented
+- ✅ **Examples & Descriptions** - Rich documentation with examples
+
+### Port Configuration Updated:
+- **Frontend (Vite)**: http://localhost:3001
+- **Backend (Hono + OpenAPI)**: http://localhost:8000
+- **Database (PostgreSQL)**: localhost:5432
+- **API Documentation**: http://localhost:8000/docs
+
+### Cleanup Actions:
+- ✅ Removed legacy backup files (index-legacy.ts, users.ts)
+- ✅ Consolidated to single OpenAPI implementation
+- ✅ Updated TypeScript generation script to use .ts instead of .mjs
+- ✅ Fixed Docker environment variable loading
+
+### Benefits Achieved:
+1. **Developer Experience** - Interactive API testing via Swagger UI
+2. **Type Safety** - Full TypeScript integration with runtime validation
+3. **Documentation** - Always up-to-date API docs
+4. **Client Generation** - Can generate SDKs from OpenAPI spec
+5. **Testing** - Easy API testing directly in browser
+
+### Production Ready:
+- ✅ All endpoints tested and validated
+- ✅ Proper error handling and status codes
+- ✅ Schema validation for all inputs
+- ✅ Clean separation of concerns
+- ✅ Maintainable code structure
+
+### Usage Commands:
+```bash
+# Start backend with OpenAPI
+pnpm --filter @approval/services dev
+
+# Start all services
+pnpm -w run dev
+
+# Access documentation
+open http://localhost:8000/docs
+
+# Test API endpoints
+curl http://localhost:8000/health
+curl http://localhost:8000/api/users
+```

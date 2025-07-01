@@ -25,7 +25,7 @@ DATABASE_URL=postgresql://user:password@host:port/database
 Use the built-in script to generate secure secrets:
 
 ```bash
-pnpm secrets
+pnpm -w run secrets
 ```
 
 This generates:
@@ -36,7 +36,7 @@ This generates:
 ## 🚨 Security Checklist
 
 ### Development
-- [ ] Use `.env.local` for local development
+- [ ] Use `.env` for local development
 - [ ] Never commit `.env` files to git
 - [ ] Use strong passwords (minimum 16 characters)
 - [ ] Rotate secrets regularly
@@ -73,6 +73,9 @@ const envSchema = z.object({
 - CORS configuration
 - Environment validation
 - Structured error handling
+- OpenAPI schema validation
+- Request/response validation with Zod
+- Type-safe API endpoints
 
 ## 🚫 What NOT to Do
 
@@ -120,10 +123,10 @@ console.log(process.env.JWT_SECRET)
 
 2. **Generate secure secrets:**
    ```bash
-   pnpm secrets
+   pnpm -w run secrets
    ```
 
-3. **Update .env.local with generated values**
+3. **Update .env with generated values**
 
 4. **Test environment validation:**
    ```bash

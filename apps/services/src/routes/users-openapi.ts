@@ -1,7 +1,8 @@
 import { OpenAPIHono } from '@hono/zod-openapi'
 import { db } from '@/db/connection'
 import { users } from '@approval/database'
-import { eq } from 'drizzle-orm'
+import { eq, count } from 'drizzle-orm'
+import { PaginationUtils } from '@/utils/pagination'
 import {
   listUsersRoute,
   getUserRoute,
@@ -12,20 +13,41 @@ import {
 
 const app = new OpenAPIHono()
 
-// Get all users
+// Get all users with pagination
 app.openapi(listUsersRoute, async (c) => {
   try {
-    const allUsers = await db.select().from(users)
+    const query = c.req.valid('query')
+    const { pageIndex, pageSize } = query
+    
+    // Get total count
+    const [totalResult] = await db.select({ count: count() }).from(users)
+    const totalRecords = totalResult.count
+    
+    // Get paginated data
+    const offset = PaginationUtils.getOffset(pageIndex, pageSize)
+    const paginatedUsers = await db.select()
+      .from(users)
+      .limit(pageSize)
+      .offset(offset)
     
     // Transform dates to ISO strings for OpenAPI
-    const usersWithStringDates = allUsers.map(user => ({
+    const usersWithStringDates = paginatedUsers.map(user => ({
       ...user,
       createdAt: user.createdAt.toISOString(),
       updatedAt: user.updatedAt.toISOString(),
     }))
     
-    return c.json(usersWithStringDates)
+    // Create paginated response
+    const response = PaginationUtils.createResponse(
+      usersWithStringDates,
+      pageIndex,
+      pageSize,
+      totalRecords
+    )
+    
+    return c.json(response)
   } catch (error) {
+    console.error('Failed to fetch users:', error)
     return c.json({ error: 'Failed to fetch users' }, 500)
   }
 })
@@ -37,7 +59,7 @@ app.openapi(getUserRoute, async (c) => {
     const user = await db.select().from(users).where(eq(users.id, id))
     
     if (user.length === 0) {
-      return c.json({ error: 'User not found' }, 404)
+      return c.json({ error: 'User not found' as const }, 404)
     }
     
     // Transform dates to ISO strings for OpenAPI
@@ -87,7 +109,7 @@ app.openapi(updateUserRoute, async (c) => {
       .returning()
     
     if (updatedUser.length === 0) {
-      return c.json({ error: 'User not found' }, 404)
+      return c.json({ error: 'User not found' as const }, 404)
     }
     
     // Transform dates to ISO strings for OpenAPI
@@ -110,7 +132,7 @@ app.openapi(deleteUserRoute, async (c) => {
     const deletedUser = await db.delete(users).where(eq(users.id, id)).returning()
     
     if (deletedUser.length === 0) {
-      return c.json({ error: 'User not found' }, 404)
+      return c.json({ error: 'User not found' as const }, 404)
     }
     
     return c.json({ message: 'User deleted successfully' })

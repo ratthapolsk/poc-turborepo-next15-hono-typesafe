@@ -231,6 +231,12 @@ pnpm install
 
 ## 📚 API Documentation
 
+### Interactive Documentation (Swagger UI)
+The API includes interactive documentation powered by OpenAPI 3.0:
+
+- **Swagger UI**: http://localhost:8000/docs
+- **OpenAPI Spec**: http://localhost:8000/openapi.json
+
 ### Health Check
 ```bash
 curl http://localhost:8000/health
@@ -238,14 +244,73 @@ curl http://localhost:8000/health
 
 ### Users API
 ```bash
-# Get all users
+# Get all users (paginated)
 curl http://localhost:8000/api/users
+
+# Get users with custom pagination
+curl "http://localhost:8000/api/users?pageIndex=2&pageSize=5"
+
+# Get specific user
+curl http://localhost:8000/api/users/1
 
 # Create user
 curl -X POST http://localhost:8000/api/users \
   -H "Content-Type: application/json" \
   -d '{"email":"test@example.com","name":"Test User"}'
+
+# Update user
+curl -X PUT http://localhost:8000/api/users/1 \
+  -H "Content-Type: application/json" \
+  -d '{"email":"updated@example.com","name":"Updated User"}'
+
+# Delete user
+curl -X DELETE http://localhost:8000/api/users/1
 ```
+
+### Approval Requests API
+```bash
+# Get all approval requests (paginated)
+curl http://localhost:8000/api/approval-requests
+
+# Get approval requests with filters and pagination
+curl "http://localhost:8000/api/approval-requests?status=pending&pageIndex=1&pageSize=10"
+
+# Filter by requester
+curl "http://localhost:8000/api/approval-requests?requesterId=1"
+
+# Get specific approval request
+curl http://localhost:8000/api/approval-requests/1
+
+# Create approval request
+curl -X POST http://localhost:8000/api/approval-requests \
+  -H "Content-Type: application/json" \
+  -d '{"title":"Budget Approval","description":"Q1 Marketing Budget","requesterId":1}'
+
+# Update approval request status
+curl -X PUT http://localhost:8000/api/approval-requests/1 \
+  -H "Content-Type: application/json" \
+  -d '{"status":"approved"}'
+
+# Delete approval request
+curl -X DELETE http://localhost:8000/api/approval-requests/1
+```
+
+### API Features
+- ✅ **OpenAPI 3.0** - Standard API specification
+- ✅ **Type-safe validation** - Request/response validation with Zod
+- ✅ **Interactive testing** - Test APIs directly in Swagger UI
+- ✅ **Auto-generated docs** - Documentation updates automatically
+- ✅ **Schema validation** - Runtime validation for all endpoints
+- ✅ **Server-side pagination** - All list endpoints support pagination
+- ✅ **Advanced filtering** - Status and requester filters for approval requests
+- ✅ **Reusable utilities** - Consistent pagination across all APIs
+
+### Pagination Features
+- **Default pagination**: `pageIndex=1`, `pageSize=10`
+- **Customizable page size**: Maximum 100 items per page
+- **Rich metadata**: Total records, total pages, next/previous indicators
+- **Query parameters**: `?pageIndex=2&pageSize=20`
+- **Consistent format**: All paginated responses follow the same structure
 
 ## 🚢 Production Deployment
 

@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import { createRoute } from '@hono/zod-openapi'
+import { PaginationQueryParams, createPaginatedResponseSchema } from '@/utils/pagination'
 
 // Schemas
 export const UserSchema = z.object({
@@ -30,21 +31,35 @@ export const NotFoundErrorSchema = z.object({
   error: z.literal('User not found'),
 })
 
+// Paginated response schema
+export const PaginatedUsersSchema = createPaginatedResponseSchema(UserSchema)
+
 // Routes
 export const listUsersRoute = createRoute({
   method: 'get',
   path: '/api/users',
   tags: ['users'],
-  summary: 'Get all users',
-  description: 'Retrieve a list of all users in the system',
+  summary: 'Get all users with pagination',
+  description: 'Retrieve a paginated list of users in the system',
+  request: {
+    query: PaginationQueryParams,
+  },
   responses: {
     200: {
       content: {
         'application/json': {
-          schema: z.array(UserSchema),
+          schema: PaginatedUsersSchema,
         },
       },
-      description: 'List of users',
+      description: 'Paginated list of users with metadata',
+    },
+    400: {
+      content: {
+        'application/json': {
+          schema: ErrorSchema,
+        },
+      },
+      description: 'Invalid pagination parameters',
     },
     500: {
       content: {

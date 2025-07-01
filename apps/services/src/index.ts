@@ -3,6 +3,7 @@ import { logger } from 'hono/logger'
 import { corsMiddleware } from '@/middleware/cors'
 import { createOpenAPIApp } from '@/lib/openapi'
 import usersRoutes from '@/routes/users-openapi'
+import approvalRequestsRoutes from '@/routes/approval-requests-simple'
 import healthRoutes from '@/routes/health-openapi'
 import { env, PORT } from '@/utils/env'
 import 'dotenv/config'
@@ -17,6 +18,7 @@ app.use('/*', corsMiddleware)
 // Routes
 app.route('/', healthRoutes)
 app.route('/', usersRoutes)
+app.route('/api/approval-requests', approvalRequestsRoutes)
 
 console.log(`🚀 Server is running on port ${PORT}`)
 console.log(`🌍 Environment: ${env.NODE_ENV}`)
