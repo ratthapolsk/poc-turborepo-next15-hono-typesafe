@@ -1,0 +1,29 @@
+{
+  "name": "@approval/services",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "clean": "rm -rf dist",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "hono": "^4.6.3",
+    "@hono/node-server": "^1.13.1",
+    "drizzle-orm": "^0.33.0",
+    "postgres": "^3.4.4",
+    "zod": "^3.22.4",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "@hono/zod-validator": "^0.4.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/cors": "^2.8.17",
+    "typescript": "^5.6.0",
+    "tsx": "^4.19.1",
+    "drizzle-kit": "^0.24.0"
+  }
+}

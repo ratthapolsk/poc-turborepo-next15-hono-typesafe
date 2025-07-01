@@ -1,0 +1,48 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
+.next/
+out/
+coverage/
+
+# Generated files
+*.d.ts
+!src/**/*.d.ts
+
+# Cache
+.cache/
+.turbo/
+.eslintcache
+*.tsbuildinfo
+
+# Environment files
+.env*
+
+# Config files that don't need linting
+*.config.js
+*.config.ts
+*.config.mjs
+postcss.config.js
+tailwind.config.js
+vite.config.ts
+vitest.config.ts
+
+# Documentation
+*.md
+
+# Test files (optional - remove if you want to lint tests)
+**/*.test.ts
+**/*.test.tsx
+**/*.spec.ts
+**/*.spec.tsx
+src/test/
+
+# Vendor/third-party
+vendor/
+public/
+
+# Database migrations
+**/migrations/

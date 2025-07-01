@@ -1,0 +1,32 @@
+# Vite
+dist/
+dist-ssr/
+
+# Logs
+*.log
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS
+.DS_Store
+
+# Local env files
+.env.local
+.env.*.local
+
+# Test coverage
+coverage/
+
+# Vitest
+.vitest/
+
+# TypeScript
+*.tsbuildinfo

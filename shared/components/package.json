@@ -1,0 +1,20 @@
+{
+  "name": "@approval/shared-components",
+  "version": "0.1.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "react": "19.0.0",
+    "@mantine/core": "^8.0.0",
+    "@tabler/icons-react": "^3.19.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.0",
+    "typescript": "^5.6.0"
+  }
+}

@@ -1,0 +1,28 @@
+# Build output
+dist/
+build/
+
+# Logs
+*.log
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# TypeScript
+*.tsbuildinfo
+
+# Database migrations (if auto-generated)
+src/db/migrations/*.sql
+
+# Coverage
+coverage/
+
+# OS
+.DS_Store
+
+# Editor
+.vscode/*
+!.vscode/extensions.json
+.idea/

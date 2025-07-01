@@ -1,0 +1,52 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build outputs
+dist/
+build/
+.next/
+out/
+coverage/
+
+# Cache files
+.cache/
+.turbo/
+.eslintcache
+*.tsbuildinfo
+
+# Environment files
+.env*
+
+# Generated files
+*.min.js
+*.min.css
+
+# Logs
+*.log
+
+# Package manager files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Documentation that should keep original formatting
+CHANGELOG.md
+LICENSE
+
+# Config files (optional - remove if you want prettier to format these)
+*.config.js
+*.config.ts
+*.config.mjs
+
+# Database
+*.sql
+**/migrations/
+
+# Vendor/third-party
+vendor/
+public/libs/
