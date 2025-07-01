@@ -1,5 +1,5 @@
--- Initialize database schema
-CREATE DATABASE approval;
+-- Initialize database schema  
+-- Database 'approval' will be created by POSTGRES_DB env var
 \c approval;
 
 -- Create basic tables for approval system

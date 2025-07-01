@@ -19,9 +19,14 @@ const envSchema = z.object({
 function validateEnv() {
   try {
     return envSchema.parse(process.env)
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('❌ Environment validation failed:')
-    console.error(error.issues?.map(issue => `  - ${issue.path.join('.')}: ${issue.message}`).join('\n'))
+    if (error && typeof error === 'object' && 'issues' in error) {
+      const zodError = error as { issues: Array<{ path: string[]; message: string }> }
+      console.error(zodError.issues?.map(issue => `  - ${issue.path.join('.')}: ${issue.message}`).join('\n'))
+    } else {
+      console.error(error)
+    }
     process.exit(1)
   }
 }

@@ -9,3 +9,12 @@ expect.extend(matchers)
 afterEach(() => {
   cleanup()
 })
+
+// Add type declarations for jest-dom matchers
+declare module 'vitest' {
+  interface Assertion<T = any> extends jest.Matchers<void, T> {
+    toBeInTheDocument(): T
+    toHaveClass(...classNames: string[]): T
+    toHaveTextContent(text: string | RegExp): T
+  }
+}

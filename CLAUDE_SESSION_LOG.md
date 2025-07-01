@@ -96,3 +96,63 @@ pnpm secrets    # Generate secure passwords
 pnpm format     # Prettier formatting
 pnpm dev        # Validates environment first
 ```
+
+---
+
+## 🗄️ DATABASE MIGRATION SETUP (2025-07-01 18:30)
+### Current Status: IN PROGRESS ⚠️
+- ✅ Database migration scripts created
+- ✅ Environment validation with db-env.ts 
+- ✅ Docker PostgreSQL container configured
+- ⚠️ **BLOCKER:** PostgreSQL init.sql error - database "approval" already exists
+
+### Database Setup Commands Added:
+```bash
+pnpm db:push      # Push schema to database
+pnpm db:generate  # Generate migrations
+pnpm db:migrate   # Run migrations
+pnpm db:studio    # Open Drizzle Studio
+```
+
+### Technical Implementation:
+- Created `src/utils/db-env.ts` for minimal DB environment validation
+- Drizzle config uses environment validation from `db-env.ts`
+- Fixed .env loading path: `resolve(__dirname, '../../../../.env.local')`
+- Docker volume cleared and recreated with new password
+
+### Current Issue:
+```
+PostgreSQL container shows "database approval already exists" error
+Need to fix init.sql script or remove CREATE DATABASE line
+```
+
+### Next Actions:
+1. ✅ Fix Docker init.sql database creation conflict
+2. ⚠️ Complete first schema push (waiting for truncate decision)
+3. Verify tables created successfully  
+4. Update README with migration workflow
+
+### Database Migration .gitignore Rules Added:
+```gitignore
+# Root .gitignore
+**/migrations/*.sql
+**/migrations/meta/
+**/migrations/*_journal.json
+**/migrations/*_snapshot.json
+drizzle/
+!docker/postgres/init.sql
+
+# Services .gitignore  
+src/db/migrations/*.sql
+src/db/migrations/*_journal.json
+src/db/migrations/*_snapshot.json
+src/db/migrations/meta/
+```
+
+### Migration Files Policy:
+- ✅ **Schema files** (schema.ts) → COMMIT (source of truth)
+- ❌ **Generated migrations** (*.sql) → IGNORE (auto-generated)
+- ❌ **Drizzle metadata** (*_journal.json, *_snapshot.json) → IGNORE
+- ❌ **Meta directory** (meta/) → IGNORE  
+- ✅ **Docker init.sql** → COMMIT (manual seed data)
+- ❌ **Environment files** → IGNORE (security)
