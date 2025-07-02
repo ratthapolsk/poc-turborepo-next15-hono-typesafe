@@ -20,14 +20,14 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"],
-      "@/components/*": ["./components/*"],
-      "@/libs/*": ["./libs/*"],
-      "@/services/*": ["src/services/*"],
-      "@/biz/*": ["./biz/*"],
-      "@/consts/*": ["./consts/*"]
+      "@/*": ["./src/*"],
+      "@/components/*": ["./src/components/*"],
+      "@/libs/*": ["./src/libs/*"],
+      "@/services/*": ["./src/services/*"],
+      "@/biz/*": ["./src/biz/*"],
+      "@/consts/*": ["./src/consts/*"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "vite-env.d.ts"],
-  "exclude": ["node_modules", "dist", "vitest.config.ts"]
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules", ".next", "vitest.config.ts"]
 }

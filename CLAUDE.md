@@ -26,7 +26,19 @@ project-root/
 │       ├─── consts/                  # Constants
 │       ├─── libs/                    # Utility libraries
 │       ├─── biz/                     # 💼 Business Logic (Client-side)
-│       │    └── useUser.ts
+│       ├─── feature**A,B,C,D,E/
+│       │    └── components
+│       │       ├── form.tsx          # Example
+│       │       └── table.tsx         # Example
+│       │    └── screens
+│       │       ├── create.tsx        # Create Screen
+│       │       └── update.tsx        # Update Screen
+│       │       └── detail.tsx        # Detail Screen
+│       │       └── main.tsx          # Main Screen (Main Flow CRUD)
+│       │    └── helper.ts (optional) # Utilities use as feature**A,B,C,D,E
+│       │    └── constants.ts         
+│       │    └── context.ts           # All context such as Mantine use form context declare
+│       │    └── types.ts             # Zod + Type + Interface
 │       ├─── services/                # 🌐 API Fetcher / Middleware Layer
 │       │    ├── fetcher.ts           # Used with React Query
 │       │    └── client.ts            # Fetch wrapper with baseURL and headers
